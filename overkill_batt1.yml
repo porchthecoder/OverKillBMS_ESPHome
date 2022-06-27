@@ -1,0 +1,378 @@
+esphome:
+  name: overkill-batt1
+  platform: ESP32
+  board: esp32dev
+  includes:
+    - overkill.h
+  libraries:
+    - /home/porch/GitHub/OverKillBMS_ESPHome/overkilllib2
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+#api:
+
+ota:
+
+syslog:
+    ip_address: "192.168.1.100"
+    port: 514
+
+mqtt:
+  broker: 192.168.1.100
+
+web_server:
+  port: 80
+
+wifi:
+  ssid: "SSID"
+  password: "Password"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ESPHOME Fallback Hotspot"
+    password: "dxiS1MrdjdGJ"
+
+captive_portal:
+
+interval:
+  - interval: 5s
+    then:
+      - if:
+          condition:
+            - sensor.in_range:
+                id: dfet
+                above: 1
+          then:
+             - output.turn_on: green_led
+          else:
+             - output.turn_off: green_led
+
+      - if:
+          condition:
+            - sensor.in_range:
+                id: cfet
+                above: 1
+          then:
+             - output.turn_on: yellow_led
+          else:
+             - output.turn_off: yellow_led
+
+      - if:
+          condition:
+            - sensor.in_range:
+                id: dltp
+                above: 1
+          then:
+             - output.turn_on: blue_led
+          else:
+             - output.turn_off: blue_led
+
+      - if:
+          condition:
+            or:
+              - sensor.in_range:
+                  id: ssov
+                  above: 1
+              - sensor.in_range:
+                  id: ssuv
+                  above: 1
+              - sensor.in_range:
+                  id: wpov
+                  above: 1
+              - sensor.in_range:
+                  id: wpuv
+                  above: 1
+              - sensor.in_range:
+                  id: wpuv
+                  above: 1
+              - sensor.in_range:
+                  id: cotp
+                  above: 1
+              - sensor.in_range:
+                  id: cltp
+                  above: 1
+              - sensor.in_range:
+                  id: dotp
+                  above: 1
+              - sensor.in_range:
+                  id: cop
+                  above: 1
+              - sensor.in_range:
+                  id: dop
+                  above: 1
+              - sensor.in_range:
+                  id: scp
+                  above: 1
+              - sensor.in_range:
+                  id: fedice
+                  above: 1
+              - sensor.in_range:
+                  id: bms_comm
+                  below: 0
+          then:
+             - output.turn_on: red_led
+          else:
+             - output.turn_off: red_led
+
+#light:
+#  - platform: binary
+#    name: "Red LED"
+#    output: red_led
+
+#  - platform: binary
+#    name: "Blue LED"
+#    output: blue_led
+
+#  - platform: binary
+#    name: "Yellow LED"
+#    output: yellow_led
+
+#  - platform: binary
+#    name: "Green LED"
+#    output: green_led
+
+output:
+  - id: yellow_led
+    platform: gpio
+    pin: GPIO26
+
+  - id: red_led
+    platform: gpio
+    pin: GPIO27
+
+  - id: blue_led
+    platform: gpio
+    pin: GPIO14
+
+  - id: green_led
+    platform: gpio
+    pin: GPIO12
+
+
+sensor:
+- platform: custom
+  lambda: |-
+    auto my_sensor = new MyCustomSensor();
+    App.register_component(my_sensor);
+    return {
+    my_sensor->voltage_sensor,
+    my_sensor->current_sensor,
+    my_sensor->soc_sensor,
+    my_sensor->cfet_sensor,
+    my_sensor->dfet_sensor,
+    my_sensor->cellv1_sensor,
+    my_sensor->cellv2_sensor,
+    my_sensor->cellv3_sensor,
+    my_sensor->cellv4_sensor,
+    my_sensor->cellv5_sensor,
+    my_sensor->cellv6_sensor,
+    my_sensor->cellv7_sensor,
+    my_sensor->cellv8_sensor,
+    my_sensor->cellv9_sensor,
+    my_sensor->cellv10_sensor,
+    my_sensor->cellv11_sensor,
+    my_sensor->cellv12_sensor,
+    my_sensor->cellv13_sensor,
+    my_sensor->cellv14_sensor,
+    my_sensor->cellv15_sensor,
+    my_sensor->cellv16_sensor,
+    my_sensor->ssov_protection_sensor,
+    my_sensor->ssov_count_sensor,
+    my_sensor->ssuv_protection_sensor,
+    my_sensor->ssuv_count_sensor,
+    my_sensor->wpov_protection_sensor,
+    my_sensor->wpov_count_sensor,
+    my_sensor->wpuv_protection_sensor,
+    my_sensor->wpuv_count_sensor,
+    my_sensor->cot_protection_sensor,
+    my_sensor->cot_count_sensor,
+    my_sensor->clt_protection_sensor,
+    my_sensor->clt_count_sensor,
+    my_sensor->dot_protection_sensor,
+    my_sensor->dot_count_sensor,
+    my_sensor->dlt_protection_sensor,
+    my_sensor->dlt_count_sensor,
+    my_sensor->coc_protection_sensor,
+    my_sensor->coc_count_sensor,
+    my_sensor->doc_protection_sensor,
+    my_sensor->doc_count_sensor,
+    my_sensor->sc_protection_sensor,
+    my_sensor->sc_count_sensor,
+    my_sensor->fed_protection_sensor,
+    my_sensor->fed_count_sensor,
+    my_sensor->slmos_protection_sensor,
+    my_sensor->slmos_count_sensor,
+    my_sensor->temp1_sensor,
+    my_sensor->temp2_sensor,
+    my_sensor->temp3_sensor,
+    my_sensor->bal_cap_sensor,
+    my_sensor->rate_cap_sensor,
+    my_sensor->cycle_count_sensor,
+    my_sensor->bms_comm_sensor};
+
+
+
+  sensors:
+  - name: "Voltage"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+  - name: "Current"
+    unit_of_measurement: A
+    accuracy_decimals: 2
+
+  - name: "SOC"
+    accuracy_decimals: 0
+
+  - name: "Charge FET"
+    accuracy_decimals: 0
+    id: cfet
+
+  - name: "Discharge FET"
+    accuracy_decimals: 0
+    id: dfet
+
+  - name: "Cell 1"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 2"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 3"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 4"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 5"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 6"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 7"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 8"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 9"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 10"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 11"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 12"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 13"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 14"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 15"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Cell 16"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+
+  - name: "Single Cell Overvoltage Protection"
+    id: ssov
+  - name: "Single Cell Overvoltage Protection Count"
+
+  - name: "Single Cell Undervoltage Protection"
+    id: ssuv
+  - name: "Single Cell Undervoltage Protection Count"
+
+  - name: "Whole Pack Overvoltage Protection"
+    id: wpov
+  - name: "Whole Pack Overvoltage Protection Count"
+
+  - name: "Whole Pack Undervoltage Protection"
+    id: wpuv
+  - name: "Whole Pack Undervoltage Protection Count"
+
+  - name: "Charge Over Temperature Protection"
+    id: cotp
+  - name: "Charge Over Temperature Protection Count"
+
+  - name: "Charge Low Temperature Protection"
+    id: cltp
+  - name: "Charge Low Temperature Protection Count"
+
+  - name: "Discharge Over Temperature Protection"
+    id: dotp
+  - name: "Discharge Over Temperature Protection Count"
+
+  - name: "Discharge Low Temperature Protection"
+    id: dltp
+  - name: "Discharge Low Temperature Protection Count"
+
+  - name: "Charging Overcurrent Protection"
+    id: cop
+
+  - name: "Charging Overcurrent Protection Count"
+
+  - name: "Discharge Overcurrent Protection"
+    id: dop
+
+  - name: "Discharge Overcurrent Protection Count"
+
+  - name: "Short Circuit Protection"
+    id: scp
+
+  - name: "Short Circuit Protection Count"
+
+  - name: "Front End Detection IC Error"
+    id: fedice
+
+  - name: "Front End Detection IC Error Count"
+
+  - name: "Software Lock MOS"
+  - name: "Software Lock MOS Count"
+
+  - name: "Temp1"
+    unit_of_measurement: C
+    accuracy_decimals: 2
+
+  - name: "Temp2"
+    unit_of_measurement: C
+    accuracy_decimals: 2
+
+  - name: "Temp3"
+    unit_of_measurement: C
+    accuracy_decimals: 2
+
+  - name: "Balance Capacity"
+    unit_of_measurement: Ah
+    accuracy_decimals: 2
+
+  - name: "Rate Capacity"
+    unit_of_measurement: Ah
+    accuracy_decimals: 2
+
+  - name: "Cycle Count"
+
+  - name: "BMS Communication"
+    id: bms_comm
