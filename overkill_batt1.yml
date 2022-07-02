@@ -5,7 +5,7 @@ esphome:
   includes:
     - overkill.h
   libraries:
-    - /home/porch/GitHub/OverKillBMS_ESPHome/overkilllib2
+    - /home/user/GitHub/OverKillBMS_ESPHome/overkilllib2
 
 # Enable logging
 logger:
