@@ -55,8 +55,9 @@ For a 12V battery bank, the VBAT+ wire from the BMS to the PCB can be cut, and c
 
 
 
+# Example Home Assistant Display
 
-
+![Screenshot_2022-07-02_13-21-05](https://user-images.githubusercontent.com/107140997/177015137-40278ae7-0b63-43b5-b000-30204c605924.png)
 
 
 
