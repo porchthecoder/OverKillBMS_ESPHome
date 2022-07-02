@@ -37,14 +37,14 @@ At the moment, this is read only. No configuration changes can be made, but the 
 See overkill_batt1.yml for an example. 
 - Change the Wifi and MQTT information to suite. 
 - Note that sending all the debug information to syslog is included, but that section can be commented out if not used.
-- Change the Libraries section needs to point to the full path of the overkilllib2 folder.
+- Change the Libraries section to point to the full path of the overkilllib2 folder.
 - The name of the BMS and how it appears in MQTT is configured under name:. The default is overkill-batt1. 
 
 # Installing (Assumes you have ESPHome already installed)
-1. Download this repo into a folder. 
+1. Download this repo into a folder. Include all folders. 
 2. Copy and modify the overkill_batt1.yml example file.
 3. Connect up the ESP module with a USB cable. It does not matter if it is connected to the BMS or not. 
-4. Type “ESPHome run overkill_batt1.yml”. ESPHome should compile the code and upload it to the ESP32 module. 
+4. Type “esphome run overkill_batt1.yml”. ESPHome should compile the code and upload it to the ESP32 module. 
 
 
 # Note on Battery Voltage (12V, untested on 24V). 
