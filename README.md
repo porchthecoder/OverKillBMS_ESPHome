@@ -4,7 +4,7 @@ Monitor your OverKill/JDB BMS with ESPHome. Exposes all the information from the
 
 
 # PCB
-This PCB uses a basic logic level converter and micro DC-DC converter to interface the ESP32-DEVKITC-32D directly into the Bluetooth interface connector. EasyEDA/JLPCB will build the PCB including populating all the surface mount parts and even the cable connector. Gerber, BOM and Pick and Place files are in the PCB directory. The DC-DC converter and pin headers will have to be soldered by hand. 
+This PCB uses a basic logic level converter and micro DC-DC converter to interface the ESP32-DEVKITC-32D directly into the BMS Bluetooth interface connector. EasyEDA/JLPCB will build the PCB including populating all the surface mount parts and even the cable connector. Gerber, BOM and Pick and Place files are in the PCB directory. The DC-DC converter and pin headers will have to be soldered by hand. 
 
 # ESP32 
 The PCB is designed to work with the ESP32-DEVKITC-32D. Digikey #1965-1000-ND and Mouser #356-ESP32-DEVKITC32D. It may work with others, but the dev kits have different pin spacing with some being a pin narrower.  
