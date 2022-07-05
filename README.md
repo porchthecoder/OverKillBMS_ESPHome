@@ -16,7 +16,7 @@ The PCB is designed to work with the ESP32-DEVKITC-32D. Digikey #1965-1000-ND an
 The PCB files (Gerber, Pick and Place, and BOM) will inport into https://jlcpcb.com/. The JLC parts numbers are included, so they will source the SMT parts and do the surface mount parts (and wire connector) placement and soldering for a few bucks more. There is 3 additonal parts you will need. 
  - ESP32-DEVKITC-32D: Digikey #1965-1000-ND or Mouser #356-ESP32-DEVKITC32D
  - DC-DC Converter R-78HE5.0-0.3: Digikey #945-3461-ND or Mouser #919-R-78HE5.0-0.3 
- - 19 pin Female PCB Pin Headers: The kits from Amazon tend to work well and can be cut down to size. https://www.amazon.com/Qunqi-2-54mm-Straight-Connector-Arduino/dp/B07CGGSDWF/
+ - 19 pin Female PCB Pin Headers: Digikey #S7017-ND. The kits from Amazon tend to work well and can be cut down to size. https://www.amazon.com/Qunqi-2-54mm-Straight-Connector-Arduino/dp/B07CGGSDWF/
 
 
 # PCB LEDs
